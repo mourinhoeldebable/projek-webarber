@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\jammodel;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,6 +14,8 @@ return new class extends Migration
     {       
         Schema::create('dashboards', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('jammodel_id');
+            $table->foreignId('post_id');
             $table->string('pelanggan');
             $table->string('nama');
             $table->string('jam');          
