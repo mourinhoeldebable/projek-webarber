@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-5 mt-3">
-                <img src="img/tamat.JPG" class="img-fluid" alt="...">
+                <img src="img/tamat.JPG" class="rounded img-fluid" alt="...">
         </div>
         
         <div class="col p-3 m-3">

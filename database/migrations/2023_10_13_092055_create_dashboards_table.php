@@ -14,8 +14,6 @@ return new class extends Migration
     {       
         Schema::create('dashboards', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jammodel_id');
-            $table->foreignId('post_id');
             $table->string('pelanggan');
             $table->string('nama');
             $table->string('jam');          

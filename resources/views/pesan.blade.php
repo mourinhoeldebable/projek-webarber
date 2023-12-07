@@ -80,14 +80,14 @@
             <div class="col-md">
               <div class="form-floating">
                 <select class="form-select" id="floatingSelectGrid" name="jam" id="jam">   
-                  @foreach($jam as $data)
-                      @if (!in_array($data->jam_potong, $hasil))
+                  @foreach($hasil as $data)
+                      @if (!in_array($data->jam_potong, $dashboardDD))
                           @if (old('jam') === $data->jam_potong)                        
                               <option value="{{ $data->jam_potong }}" selected>{{ $data->jam_potong }}.00</option>                     
                           @else
                               <option value="{{ $data->jam_potong }}">{{ $data->jam_potong }}.00</option>
                           @endif
-                      @endif   
+                      @endif
                   @endforeach
                 </select>
                 <label for="floatingSelectGrid" class="text-black">Tentukan Jam Potong(WIB)</label>

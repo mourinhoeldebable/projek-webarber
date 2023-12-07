@@ -31,19 +31,13 @@ class crudController extends Controller
     public function create(Request $request)
     {   
         
-        $jamSekarang = Carbon::now()->hour; // Mendapatkan jam sekarang
+        $jamSekarang = Carbon::now('Asia/Jakarta')->hour; // Mendapatkan jam sekarang
 
         $nama = $request->input('check');
-        $hasil = DB::table('dashboards')
-            ->join('jammodels', 'dashboards.jam', '=', 'jammodels.jam_potong') // Menggabungkan tabel berdasarkan kunci asing
-            // ->select(jammodel::all())
-            ->where('jammodels.jam_potong', '>',$jamSekarang) // Kondisi pertama dari tabel 'jam'
-            ->pluck('dashboards.jam',) 
-            ;
-        $hasilarray = $hasil->toArray();
+        $hasil = DB::table('jammodels')->where('jam_potong', '>', $jamSekarang)->get();
+        // $hasilarray = $hasil->toArray();
         // dd($hasilarray);
-        $dashboardDD = dashboard::pluck('jam')->toArray(); // Ambil ID jam potong rambut yang sudah diambil
-        
+        $dashboardDD = dashboard::where('nama', $nama)->pluck('jam')->toArray(); // Ambil ID jam potong rambut yang sudah diambil
         // $jam = jammodel::where('jam_potong', '<', Carbon::now())->get();
         return view('pesan',[
             "title" => "Order Now!",
@@ -51,7 +45,7 @@ class crudController extends Controller
             // "dashboard" => dashboard::pluck('jam')->toArray(), // Ambil ID jam potong rambut yang sudah diambil
             "jam" => jammodel::all(),
             "dashboardDD" => $dashboardDD,
-            "hasil" => $hasilarray
+            "hasil" => $hasil
         
         ]);
     }
