@@ -45,7 +45,8 @@ class crudController extends Controller
             // "dashboard" => dashboard::pluck('jam')->toArray(), // Ambil ID jam potong rambut yang sudah diambil
             "jam" => jammodel::all(),
             "dashboardDD" => $dashboardDD,
-            "hasil" => $hasil
+            "hasil" => $hasil,
+            "nama" => $nama
         
         ]);
     }
