@@ -7,6 +7,7 @@ use App\Models\dashboard;
 use Illuminate\Routing\Controller;
 use App\Http\Requests\StoredashboardRequest;
 use App\Http\Requests\UpdatedashboardRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class Postcontroller extends Controller
 {
@@ -15,7 +16,7 @@ class Postcontroller extends Controller
      */
     public function index()
     {
-        return view('info',[
+        return view('home',[
             "title" => "We Barber",
         ]);
     }
@@ -24,7 +25,7 @@ class Postcontroller extends Controller
         return view('price',[
             "title" => "Price List",
         ]);
-    }
+    }   
 
     /**
      * Show the form for creating a new resource.
@@ -53,18 +54,35 @@ class Postcontroller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(dashboard $dashboard)
+    public function edit($id,dashboard $dashboard)
     {
-        //
+        $capster = Post::where('id',$id)->get();
+        // dd($capster);
+        return view('beken.ubah',[
+            "title" => "edit",
+            "posts" => Post::all(),
+            "caps" => $capster
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatedashboardRequest $request, dashboard $dashboard)
-    {
-        //
-    }
+    public function update(UpdatePostRequest $request, $id)
+{
+    $validated = $request->validate([
+        'nama'=> 'required',
+        'email' => 'required',
+        'notelp' => 'required',
+        'pengalaman' => 'required',
+        'status' => 'required'
+    ]);
+
+    // Perbarui data dashboard dengan ID yang sesuai
+    Post::where('id', $id)->update($validated);
+
+    return redirect('hubungi')->with('success', 'Pesanan Berhasil diubah, Jangan lupa datang yaa.. Happy Bear');
+}
 
     /**
      * Remove the specified resource from storage.

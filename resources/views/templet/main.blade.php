@@ -8,17 +8,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
       body {
-        background-image: url('../../img/2.jpg');
-        /* Opsional: properti lain untuk mengatur tampilan background */
-        background-size: cover; /* Untuk menyesuaikan ukuran gambar dengan background */
-        /* Tambahan properti lainnya seperti background-repeat, background-position, dll. */
+        background-image: url('../../img/blur.jpg');
+
+        /* background-size: cover; */
+/* 
+        background-image: blur(5px); 
+        backdrop-filter: blur(6px); */
+        background-repeat: no-repeat;
+
 }
       body {
-        color: white;
+        color: rgb(0, 0, 0);
       }
+
+      .cards {
+    background-color: rgb(216, 146, 230);
+}
     </style>
   </head>
   <body>
+    {{-- <img src="../../img/9.PNG" alt="background" class="background"> --}}
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Tenth navbar example">
         <div class="container-fluid">
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">

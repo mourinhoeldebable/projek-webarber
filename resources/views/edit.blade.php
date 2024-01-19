@@ -31,7 +31,7 @@
       <form method="Post" action="/info/{{ $dashboards[0]->id }}" enctype="multipart/form-data" >    
         @method('put') 
         @csrf          
-          <div class="form-floating mb-3">                   
+          {{-- <div class="form-floating mb-3">                   
             <input
               type="text"
               name="pelanggan"
@@ -41,11 +41,11 @@
               value="{{ old('pelanggan', $dashboards[0]->pelanggan)}}"
             >               
             <label for="pelanggan">Nama</label>
-          </div>
+          </div> --}}
           <div class="row g-2 mb-3">
             <div class="col-md">
               <div class="form-floating">
-                <select class="form-select" id="floatingSelectGrids-222" name="nama">              
+                <select class="form-select" id="floatingSelectGrids" name="nama">              
                   @foreach ($posts as $post)                   
                     {{-- <option value="{{ $post->nama }}">{{ $post->nama }}</option>  --}}                                     
                     @if(old('nama', $post->nama) == $dashboards[0]->nama)
@@ -60,16 +60,8 @@
             </div>
             <div class="col-md">
               <div class="form-floating">
-                <select class="form-select" id="floatingSelectGrid-1111" name="jam" id="jam">   
-                  @foreach($jam as $data)
-                    @if (!in_array(  $data->jam_potong, $dashboardDD))
-                      @if (old('jam', $data->jam_potong) == $dashboards[0]->jam)                        
-                          <option value="{{ $data->jam_potong }}" selected>{{ $data->jam_potong }}</option>                     
-                      @else
-                          <option value="{{ $data->jam_potong }}">{{ $data->jam_potong }}</option>
-                      @endif
-                    @endif   
-                  @endforeach
+                <select class="form-select" id="floatingSelectGrid" name="jam" id="jam">             
+                          <option value="{{ $dashboards[0]->jam }}" selected>{{ $dashboards[0]->jam }}</option>                       
                 </select>
                 <label for="floatingSelectGrid">Tentukan Jam Potong(W.I.B)</label>
               </div>
@@ -141,7 +133,7 @@
               </div>
             </div>
           </p>
-        <button class="btn btn-primary" type="submit">Pesan</button>
+        <button class="btn btn-primary" type="submit">Pesan</button> <a href="/info" class="btn btn-primary ml-2">batal edit</a>
           </form>
     </div>
 </div>
@@ -155,7 +147,7 @@ input::-webkit-inner-spin-button {
 }
 
 </style>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   function previewImage(){
   const image = document.querySelector('#image');
@@ -170,6 +162,37 @@ input::-webkit-inner-spin-button {
     imgPreview.src = oFRevent.target.result;
   }
 }
+
+$(document).ready(function() {
+      $('#floatingSelectGrids').on('change', function() {
+          var selectedId = $(this).val();
+
+          if (selectedId) {
+              $.ajax({
+                  url: '{{ route("get.data", ":nama") }}'.replace(':nama', selectedId),
+                  type: 'GET',
+                  dataType: 'json',
+                  success: function(response) {
+                      var options = '<option value="">Pilih salah satu</option>';
+
+                      // Mengisi select options untuk form B
+                      $.each(response, function(index, data) {
+                          // console.log(data);
+                          options += '<option value="' + data.jam_potong + '">' + data.jam_potong + '.00</option>';
+                          console.log(options);
+                      });
+
+                      $('#floatingSelectGrid').html(options); // Mengisi form B dengan opsi yang diambil
+                  },
+                  error: function(xhr) {
+                      console.log(xhr.responseText); // Menampilkan pesan kesalahan jika terjadi
+                  }
+              });
+          } else {
+              $('#form_b').html('<option value="">Pilih form A terlebih dahulu</option>');
+          }
+      });
+  });
     
 </script>
 

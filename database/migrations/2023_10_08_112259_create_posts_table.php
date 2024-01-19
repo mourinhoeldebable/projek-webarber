@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('nama')->unique();
+            $table->string('notelp');
+            $table->string('email');
             $table->text('pengalaman');
+            $table->string('status');
             $table->timestamps();
         });
     }

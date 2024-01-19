@@ -40,6 +40,10 @@ body {
     </style>
   </head>
 
+  @extends('templet/main')
+
+  @section('container')
+
 
 <body class="text-light">
   <div class="container px-4 py-5">
@@ -65,8 +69,10 @@ body {
                 <path d="M9.998 5.083 10 5a2 2 0 1 0-3.132 1.65 5.982 5.982 0 0 1 3.13-1.567z"/>
               </svg>
             </div>
-            <h4 class="fw-semibold mb-0 text-light">Featured title</h4>
-            <p class="text-light">Paragraph of text beneath the heading to explain the heading.</p>
+            <div class="">
+              <h4 class="fw-semibold mb-0 text-black">Featured title</h4>
+              <p class="text-black">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
           </div>
 
           <div class="col d-flex flex-column gap-2">
@@ -76,8 +82,10 @@ body {
                 <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
               </svg>
             </div>
-            <h4 class="fw-semibold mb-0 text-light">Featured title</h4>
-            <p class="text-light">Paragraph of text beneath the heading to explain the heading.</p>
+            <div class="">
+              <h4 class="fw-semibold mb-0 text-black">Featured title</h4>
+              <p class="text-black">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
           </div>
 
           <div class="col d-flex flex-column gap-2">
@@ -87,8 +95,10 @@ body {
                 <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
               </svg>
             </div>
-            <h4 class="fw-semibold mb-0 text-light">Featured title</h4>
-            <p class="text-light">Paragraph of text beneath the heading to explain the heading.</p>
+            <div class="text-white">
+              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <p class="">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
           </div>
 
           <div class="col d-flex flex-column gap-2">
@@ -98,8 +108,10 @@ body {
                 <path d="M2 1a2 2 0 0 0-2 2v9.5A1.5 1.5 0 0 0 1.5 14h.653a5.373 5.373 0 0 1 1.066-2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v9h-2.219c.554.654.89 1.373 1.066 2h.653a1.5 1.5 0 0 0 1.5-1.5V3a2 2 0 0 0-2-2z"/>
               </svg>
             </div>
-            <h4 class="fw-semibold mb-0 text-light">Featured title</h4>
-            <p class="text-light">Paragraph of text beneath the heading to explain the heading.</p>
+            <div class="text-white">
+              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <p class="">Paragraph of text beneath the heading to explain the heading.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -127,3 +139,5 @@ body {
   </div> --}}
   </body>
 </html>
+
+@endsection

@@ -17,13 +17,17 @@ class crudController extends Controller
      */
     public function index()
     {
+        $capster = Post::where('status', 'hadir')
+        ->get();
         return view('info',[
             "title" => "About Us",
-            "posts" => Post::all(),
+            "posts" => $capster
            
         ]);
       
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -32,23 +36,46 @@ class crudController extends Controller
     {   
         
         $jamSekarang = Carbon::now('Asia/Jakarta')->hour; // Mendapatkan jam sekarang
-
+        $capster = Post::where('status', 'hadir') ->get();
         $nama = $request->input('check');
+        $currentDateTime = Carbon::now();
+        $available = dashboard::where('created_at','<', $currentDateTime);
         $hasil = DB::table('jammodels')->where('jam_potong', '>', $jamSekarang)->get();
-        // $hasilarray = $hasil->toArray();
-        // dd($hasilarray);
-        $dashboardDD = dashboard::where('nama', $nama)->pluck('jam')->toArray(); // Ambil ID jam potong rambut yang sudah diambil
-        // $jam = jammodel::where('jam_potong', '<', Carbon::now())->get();
+        $dashboardDD = dashboard::where('nama', $nama)
+            ->pluck('jam')
+            ->toArray(); // Ambil ID jam potong rambut yang sudah diambil
         return view('pesan',[
             "title" => "Order Now!",
-            "posts" => Post::all(),
+            "posts" => $capster,
+            "kuren" => $available,
             // "dashboard" => dashboard::pluck('jam')->toArray(), // Ambil ID jam potong rambut yang sudah diambil
-            "jam" => jammodel::all(),
             "dashboardDD" => $dashboardDD,
             "hasil" => $hasil,
             "nama" => $nama
-        
         ]);
+    }
+
+    public function getData($nama)
+    {
+        // $jamSekarang = Carbon::now('Asia/Jakarta')->hour; // Mendapatkan jam sekarang
+        $jamSekarang = Carbon::now('Asia/Jakarta')->hour; // Mendapatkan jam sekarang
+        $hasil = DB::table('jammodels')->where('jam_potong', '>', $jamSekarang)->get();
+        $data = dashboard::where('nama', $nama)
+            ->whereDate('created_at', '>=', today())
+            ->pluck('jam')
+            ->toArray(); // Ubah sesuai dengan logika Anda
+        // !in_array($data->jam_potong, $dashboardDD))
+        $availableHour = array();
+
+        foreach ($hasil as $key => $value) {
+            if (in_array($value->jam_potong,$data)) {
+                continue;
+            }else{
+                array_push($availableHour, $value);
+            }
+        }
+                         
+        return response()->json($availableHour);
     }
 
     /**
@@ -70,27 +97,6 @@ class crudController extends Controller
         if($request->file('image')){
             $validated['image'] = $request->file('image')->store('bukti-bayar');
         }
-         //Simpan data ke database
-        // $dashboard = new dashboard();
-        // $dashboard->pelanggan = $request->input('pelanggan');
-        // $dashboard->nama = $request->input('nama');
-        // $dashboard->jam = $request->input('jam');
-        // $dashboard->email = $request->input('email');
-        // $dashboard->telp = $request->input('telp');
-        // tambahkan field lainnya
-
-    //     $barber = dashboard::find($dashboard);
-    //     if ($barber->jam == $dashboard->jam) {
-    //     return redirect('/info/create')->with('error', 'Maaf, waktu tersebut sudah terisi. Silakan pilih waktu lain.');
-        
-
-    // }
-
-    // if ($barber->jam != null) {
-    //     $jam = $dashboard->jam;
-    // }
-
-        // $dashboard->save();
         dashboard::create($validated);
         return redirect('/info/create')->with('sucess', 'Pemesanan Berhasil dilakukan, Jangan lupa datang yaa.. Happy Bear');
     }
@@ -100,7 +106,7 @@ class crudController extends Controller
      */
     public function show(dashboard $dashboard)
     {
-        //
+        
     }
 
     /**
@@ -108,19 +114,24 @@ class crudController extends Controller
      */
     public function edit($id ,Request $request)
     {
-        $query = $request->input('radioNama');
+        $jamSekarang = Carbon::now('Asia/Jakarta')->hour; // Mendapatkan jam sekarang
+        $capster = Post::where('status', 'hadir') ->get();
+        $nama = $request->input('check');
         $dashboards = dashboard::find($id)
-            ->where('id', $id)
-            ->get();
-        $dashboardDD =dashboard::where('nama',)->pluck('jam')->toArray();      // Ambil ID jam potong rambut yang sudah diambil
-      
-        return view('edit', compact('dashboardDD','dashboards','query'),[
-            'title' => "Edit Pesananmu",
-            // 'dashboards' => $dashboard,
-            'posts' => Post::all(),
-            'jam' => jammodel::all()                                                     
-        ],
-            response()->json(['jam' => $dashboardDD])); response()->json(['jam' => $dashboardDD]);
+        ->where('id', $id)
+        ->get();
+        $hasil = DB::table('jammodels')->where('jam_potong', '>', $jamSekarang)->get();
+        $dashboardDD = dashboard::where('nama', $nama)->pluck('jam')->toArray(); // Ambil ID jam potong rambut yang sudah diambil
+        return view('edit',[
+            "title" => "Edit ur order",
+            "posts" => $capster,
+            // "dashboard" => dashboard::pluck('jam')->toArray(), // Ambil ID jam potong rambut yang sudah diambil
+            "data" => jammodel::all(),
+            "dashboardDD" => $dashboardDD,
+            "hasil" => $hasil,
+            "nama" => $nama,
+            "dashboards" => $dashboards
+        ]);
     }
 
     /**
@@ -129,12 +140,10 @@ class crudController extends Controller
     public function update(Request $request,$id)
     {
         $validated = $request->validate([
-            'pelanggan' => 'required',
             'nama'=> 'required',
             'jam' => 'required',
             'email' => 'required|email',
-            'telp' => 'required|min:9|max:15',
-            'image' => 'required|image'
+            'telp' => 'required|min:9|max:15'
 
         ]);
 
