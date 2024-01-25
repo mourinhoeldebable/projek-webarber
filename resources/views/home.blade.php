@@ -70,7 +70,7 @@ body {
               </svg>
             </div>
             <div class="">
-              <h4 class="fw-semibold mb-0 text-black">Featured title</h4>
+              <h4 class="fw-semibold mb-0 text-black">Harga Terjangkau</h4>
               <p class="text-black">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
           </div>
@@ -83,7 +83,7 @@ body {
               </svg>
             </div>
             <div class="">
-              <h4 class="fw-semibold mb-0 text-black">Featured title</h4>
+              <h4 class="fw-semibold mb-0 text-black">Waktu Yang Fleksibel</h4>
               <p class="text-black">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
           </div>
@@ -96,7 +96,7 @@ body {
               </svg>
             </div>
             <div class="text-white">
-              <h4 class="fw-semibold mb-0">Featured title</h4>
+              <h4 class="fw-semibold mb-0">Pemesanan Secara Online</h4>
               <p class="">Paragraph of text beneath the heading to explain the heading.</p>
             </div>
           </div>
